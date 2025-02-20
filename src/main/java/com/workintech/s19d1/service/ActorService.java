@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface ActorService {
     List<Actor> findAll();
-    Actor find(long id);
-    Actor save(Actor actor, Movie movie);
-    Actor update(long id);
-    Actor delete(long id);
+    Actor findById(long id);
+    Actor save(Actor actor);
+    //Actor update(long id, Actor updatedActor);
+    void delete(Actor actor);
 }

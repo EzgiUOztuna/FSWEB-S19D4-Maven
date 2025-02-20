@@ -1,39 +1,34 @@
 package com.workintech.s19d1.controller;
-
-import com.workintech.s19d1.dto.MovieActorRequest;
-import com.workintech.s19d1.entity.Actor;
 import com.workintech.s19d1.entity.Movie;
 import com.workintech.s19d1.service.MovieService;
-import com.workintech.s19d1.service.MovieServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/movie")
 public class MovieController {
     private MovieService movieService;
 
-    @Autowired
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
-    }
-
     @GetMapping
     public List<Movie> getAll(){
-        return movieService.findAll();
-    }
+       List<Movie> movieList = movieService.findAll();
 
+       return movieList.stream().map(movie -> {movie.setActors(movie.getActors()); return movie;
+       }).collect(Collectors.toList());
+    }
+/*
     @GetMapping("/{id}")
     public Movie getById(@PathVariable long id){
-        return movieService.find(id);
+        return movieService.findById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Movie save(@RequestBody MovieActorRequest request){
-        Movie savedMovie = movieService.save(request.movie(), request.actor());
-        return savedMovie;
+        return movieService.save(request.getMovies(), request.getActor());
     }
 
     @PutMapping("/{id}")
@@ -46,5 +41,5 @@ public class MovieController {
     public Movie delete(@PathVariable long id){
         Movie deletedMovie = movieService.delete(id);
         return deletedMovie;
-    }
+    }*/
 }

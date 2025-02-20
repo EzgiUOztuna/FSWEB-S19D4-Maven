@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +45,7 @@ class ControllerTest {
     private ObjectMapper objectMapper;
 
     private Actor actor;
-    private ActorRequest actorRequest;
+    private ActorRequest movieActorRequest;
 
     @BeforeEach
     void setUp() {
@@ -65,9 +64,9 @@ class ControllerTest {
 
         actor.setMovies(Arrays.asList(movie));
 
-        actorRequest = new ActorRequest();
-        actorRequest.setActor(actor);
-        actorRequest.setMovies(Arrays.asList(movie));
+        movieActorRequest = new ActorRequest();
+        movieActorRequest.setActor(actor);
+        movieActorRequest.setMovies(Arrays.asList(movie));
     }
 
     @Test
@@ -102,9 +101,9 @@ class ControllerTest {
 
         mockMvc.perform(post("/actor")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(actorRequest)))
+                        .content(objectMapper.writeValueAsString(movieActorRequest)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(actor.getId().intValue())))
+                .andExpect(jsonPath("$.id", is(actor.getId())))
                 .andExpect(jsonPath("$.firstName", is(actor.getFirstName())));
     }
 

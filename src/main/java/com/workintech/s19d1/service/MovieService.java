@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface MovieService {
     List<Movie> findAll();
-    Movie find(long id);
-    Movie save(Movie movie, Actor actor);
-    Movie update(long id,Movie updatedMovie);
-    Movie delete(long id);
+    Movie findById(long id);
+    Movie save(Movie movie);
+    //Movie update(long id,Movie updatedMovie);
+    void delete(Movie movie);
 }
